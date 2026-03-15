@@ -159,18 +159,5 @@ User profile page with saved preferences
 
 Dark mode toggle
 
-## 📸 Screenshots 
-Welcome Page
-
-
-Auth0
-
-
-Dashboard  
-
-
-Task Details 
-
-
 ## 📄 License
 This project is for educational and portfolio use.
