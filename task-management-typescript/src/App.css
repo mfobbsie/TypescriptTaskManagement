@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Pacifico&display=swap");
+h1,
+h2,
+h3 {
+  font-family: "Pacifico", cursive;
+  color: darkslategray;
+}
+body {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  background-color: blanchedalmond;
+  color: darkslategray;
+}
+
+#hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  min-height: 420px;
+  border-radius: 16px;
+  padding-top: 40px;
+  background-image:
+    linear-gradient(rgba(247, 241, 232, 0.4), rgba(247, 241, 232, 0.4)),
+    url("./assets/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 24px 20px;
+  }
+}
+
+#hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 640px;
+
+  @media (max-width: 900px) {
+    align-items: center;
+  }
+}
+
+#hero-content p {
+  max-width: 52ch;
+}
+
+.hero-status,
+.hero-error,
+.hero-welcome {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.8);
+}
+
+.hero-error {
+  color: #8f2d1b;
+  font-weight: 600;
+}
+
+.hero-welcome {
+  color: rgb(60, 33, 2);
+  font-weight: 600;
+}
+
+#get-started {
+  background: rgb(60, 33, 2);
+  color: whitesmoke;
+  border: 1px solid rgb(60, 33, 2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+#get-started:hover {
+  background: rgb(90, 56, 8);
+  color: whitesmoke;
+}
+
+#get-started:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
