@@ -8,7 +8,7 @@ import Dashboard from "./Dashboard";
 import ViewTaskDetails from "./ViewTaskDetails";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import Auth0ProviderWithNavigate from "./Auth0ProviderWithNavigate";
-import { TaskProvider } from "./TaskContext";
+import { TaskProvider } from "./TaskProvider";
 
 const ProtectedDashboard = withAuthenticationRequired(Dashboard, {
   onRedirecting: () => <p>Redirecting to login...</p>,

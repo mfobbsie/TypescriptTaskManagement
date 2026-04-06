@@ -1,7 +1,8 @@
 // src/ViewTaskDetails.tsx
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useTasks, type Task } from "./TaskContext";
+import { useTasks } from "./useTasks";
+import { type Task } from "./TaskContext";
 
 const ViewTaskDetails = () => {
   const { id } = useParams();
@@ -14,25 +15,16 @@ const ViewTaskDetails = () => {
   );
 
   const [isEditing, setIsEditing] = useState(false);
-  const [form, setForm] = useState<Omit<Task, "id">>({
-    title: "",
-    description: "",
-    dueDate: "",
-    priority: "Low",
-    completed: false,
-  });
-
-  useEffect(() => {
-    if (task) {
-      setForm({
-        title: task.title,
-        description: task.description,
-        dueDate: task.dueDate,
-        priority: task.priority,
-        completed: task.completed,
-      });
-    }
-  }, [task]);
+  const [form, setForm] = useState<Omit<Task, "id">>(() => ({
+    title: task?.title ?? "",
+    description: task?.description ?? "",
+    dueDate: task?.dueDate ?? "",
+    priority: task?.priority ?? "Low",
+    completed: task?.completed ?? false,
+    urgency: task?.urgency ?? "Not Urgent",
+    importance: task?.importance ?? "Not Important",
+    energyLevel: task?.energyLevel ?? "Medium",
+  }));
 
   if (!task) return <p>Task not found.</p>;
 
@@ -111,6 +103,40 @@ const ViewTaskDetails = () => {
         <option>Low</option>
         <option>Medium</option>
         <option>High</option>
+      </select>
+
+      <label>Urgency</label>
+      <select
+        name="urgency"
+        value={form.urgency}
+        onChange={onChange}
+        disabled={!isEditing}
+      >
+        <option value="Urgent">Urgent</option>
+        <option value="Not Urgent">Not Urgent</option>
+      </select>
+
+      <label>Importance</label>
+      <select
+        name="importance"
+        value={form.importance}
+        onChange={onChange}
+        disabled={!isEditing}
+      >
+        <option value="Important">Important</option>
+        <option value="Not Important">Not Important</option>
+      </select>
+
+      <label>Energy Level</label>
+      <select
+        name="energyLevel"
+        value={form.energyLevel}
+        onChange={onChange}
+        disabled={!isEditing}
+      >
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
       </select>
 
       <label>

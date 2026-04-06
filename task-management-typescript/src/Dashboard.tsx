@@ -2,7 +2,9 @@
 import React, { useMemo, useState } from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
-import { useTasks, type Task } from "./TaskContext";
+import { useTasks } from "./useTasks";
+import { type Task } from "./TaskContext";
+import EisenhowerMatrix from "./EisenhowerMatrix";
 
 type SortOption = "none" | "dueDate" | "priority";
 
@@ -10,13 +12,18 @@ const Dashboard: React.FC = () => {
   const { tasks, addTask, toggleTaskCompleted } = useTasks();
   const navigate = useNavigate();
 
+  const [view, setView] = useState<"list" | "matrix">("list");
   const [sortBy, setSortBy] = useState<SortOption>("none");
+
   const [newTask, setNewTask] = useState<Omit<Task, "id">>({
     title: "",
     description: "",
     dueDate: "",
     priority: "Low",
     completed: false,
+    urgency: "Not Urgent",
+    importance: "Not Important",
+    energyLevel: "Medium",
   });
 
   const handleInputChange = (
@@ -34,7 +41,6 @@ const Dashboard: React.FC = () => {
 
   const sortedTasks = useMemo(() => {
     const priorityRank = { High: 3, Medium: 2, Low: 1 };
-
     const items = [...tasks];
 
     if (sortBy === "dueDate") {
@@ -67,12 +73,16 @@ const Dashboard: React.FC = () => {
     }
 
     addTask(newTask);
+
     setNewTask({
       title: "",
       description: "",
       dueDate: "",
       priority: "Low",
       completed: false,
+      urgency: "Not Urgent",
+      importance: "Not Important",
+      energyLevel: "Medium",
     });
   };
 
@@ -80,6 +90,13 @@ const Dashboard: React.FC = () => {
     <div className="dashboard">
       <h1>Task Dashboard</h1>
 
+      {/* View Toggle */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        <button onClick={() => setView("list")}>List View</button>
+        <button onClick={() => setView("matrix")}>Eisenhower Matrix</button>
+      </div>
+
+      {/* Add Task Form */}
       <div className="task-form">
         <div className="form-group">
           <label>Task Title</label>
@@ -122,9 +139,48 @@ const Dashboard: React.FC = () => {
           </select>
         </div>
 
+        {/* NEW FIELDS */}
+        <div className="form-group">
+          <label>Urgency</label>
+          <select
+            name="urgency"
+            value={newTask.urgency}
+            onChange={handleInputChange}
+          >
+            <option value="Urgent">Urgent</option>
+            <option value="Not Urgent">Not Urgent</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Importance</label>
+          <select
+            name="importance"
+            value={newTask.importance}
+            onChange={handleInputChange}
+          >
+            <option value="Important">Important</option>
+            <option value="Not Important">Not Important</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Energy Level</label>
+          <select
+            name="energyLevel"
+            value={newTask.energyLevel}
+            onChange={handleInputChange}
+          >
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
         <button onClick={addNewTask}>Add Task</button>
       </div>
 
+      {/* Sort Dropdown */}
       <div className="task-list-header">
         <label>Sort tasks by</label>
         <select
@@ -137,35 +193,40 @@ const Dashboard: React.FC = () => {
         </select>
       </div>
 
-      <div className="task-list">
-        {sortedTasks.map((task) => (
-          <div key={task.id} className="task-item">
-            <label>
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => toggleTaskCompleted(task.id)}
-              />
-              Mark completed
-            </label>
+      {/* CONDITIONAL RENDERING */}
+      {view === "list" && (
+        <div className="task-list">
+          {sortedTasks.map((task) => (
+            <div key={task.id} className="task-item">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => toggleTaskCompleted(task.id)}
+                />
+                Mark completed
+              </label>
 
-            <h3 className={task.completed ? "task-title-completed" : ""}>
-              {task.title}
-            </h3>
+              <h3 className={task.completed ? "task-title-completed" : ""}>
+                {task.title}
+              </h3>
 
-            <p>Due: {task.dueDate}</p>
-            <p>Priority: {task.priority}</p>
+              <p>Due: {task.dueDate}</p>
+              <p>Priority: {task.priority}</p>
 
-            {task.completed && (
-              <p className="task-complete-message">
-                Awesome job — this task is complete!
-              </p>
-            )}
+              {task.completed && (
+                <p className="task-complete-message">
+                  Awesome job — this task is complete!
+                </p>
+              )}
 
-            <button onClick={() => viewTask(task)}>View More</button>
-          </div>
-        ))}
-      </div>
+              <button onClick={() => viewTask(task)}>View More</button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {view === "matrix" && <EisenhowerMatrix />}
     </div>
   );
 };
