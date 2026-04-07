@@ -68,7 +68,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: production-build
-          path: dist/          
+          path: dist/
+
+      - name: List dist contents  # ← add this to confirm files are there
+        run: ls -la dist/
+
+      - name: Prepare Vercel output
+        run: |
+          mkdir -p .vercel/output/static
+          cp -r dist/. .vercel/output/static/
+          echo '{"version":3}' > .vercel/output/config.json
+
+      - name: List vercel output  # ← confirm structure
+        run: ls -la .vercel/output/static/
 
       - name: Install Vercel CLI
         run: npm install -g vercel
@@ -78,4 +90,4 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        run: vercel deploy dist/ --prod --yes --token $VERCEL_TOKEN
+        run: vercel deploy --prod --yes --prebuilt --token $VERCEL_TOKEN
