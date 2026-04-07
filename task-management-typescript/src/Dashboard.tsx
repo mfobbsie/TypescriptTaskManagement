@@ -1,4 +1,3 @@
-// src/Dashboard.tsx
 import React, { useMemo, useState } from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,7 @@ import EisenhowerMatrix from "./EisenhowerMatrix";
 type SortOption = "none" | "dueDate" | "priority";
 
 const Dashboard: React.FC = () => {
-  const { tasks, addTask, toggleTaskCompleted } = useTasks();
+  const { tasks, addTask, toggleTaskCompleted, deleteTask } = useTasks();
   const navigate = useNavigate();
 
   const [view, setView] = useState<"list" | "matrix">("list");
@@ -205,8 +204,9 @@ const Dashboard: React.FC = () => {
       {/* Add Task Form */}
       <div className="task-form">
         <div className="form-group">
-          <label>Task Title</label>
+          <label htmlFor="title">Task Title</label>
           <input
+            id="title"
             name="title"
             value={newTask.title}
             onChange={handleInputChange}
@@ -214,8 +214,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label>Description</label>
+          <label htmlFor="description">Description</label>
           <textarea
+            id="description"
             name="description"
             value={newTask.description}
             onChange={handleInputChange}
@@ -223,8 +224,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label>Due Date</label>
+          <label htmlFor="dueDate">Due Date</label>
           <input
+            id="dueDate"
             type="date"
             name="dueDate"
             value={newTask.dueDate}
@@ -233,8 +235,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label>Priority</label>
+          <label htmlFor="priority">Priority</label>
           <select
+            id="priority"
             name="priority"
             value={newTask.priority}
             onChange={handleInputChange}
@@ -245,9 +248,11 @@ const Dashboard: React.FC = () => {
           </select>
         </div>
 
+        {/* KEEP THESE — the correct versions */}
         <div className="form-group">
-          <label>Urgency</label>
+          <label htmlFor="urgency">Urgency</label>
           <select
+            id="urgency"
             name="urgency"
             value={newTask.urgency}
             onChange={handleInputChange}
@@ -258,8 +263,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label>Importance</label>
+          <label htmlFor="importance">Importance</label>
           <select
+            id="importance"
             name="importance"
             value={newTask.importance}
             onChange={handleInputChange}
@@ -270,8 +276,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label>Energy Level</label>
+          <label htmlFor="energyLevel">Energy Level</label>
           <select
+            id="energyLevel"
             name="energyLevel"
             value={newTask.energyLevel}
             onChange={handleInputChange}
@@ -350,6 +357,7 @@ const Dashboard: React.FC = () => {
               )}
 
               <button onClick={() => viewTask(task)}>View More</button>
+              <button onClick={() => deleteTask(task.id)}>Delete</button>
             </div>
           ))}
         </div>
