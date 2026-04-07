@@ -47,7 +47,6 @@ export default function FocusTimer({ taskTitle }: FocusTimerProps) {
         marginTop: 24,
         padding: 16,
         borderRadius: 12,
-        background: "#fafafa",
         boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
         maxWidth: 260,
       }}

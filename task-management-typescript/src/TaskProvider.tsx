@@ -1,11 +1,18 @@
 // src/TaskProvider.tsx
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { type Task } from "./TaskContext";
 import { TaskContext } from "./TaskContext";
 
 export function TaskProvider({ children }: { children: ReactNode }) {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const stored = localStorage.getItem("tasks");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}, [tasks]);
 
   const addTask = (task: Omit<Task, "id">) => {
     setTasks((prev) => [...prev, { ...task, id: Date.now() }]);

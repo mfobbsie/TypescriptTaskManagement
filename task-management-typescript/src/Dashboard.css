@@ -1,7 +1,9 @@
 .dashboard {
   width: min(900px, 100%);
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 3rem;
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem;
   display: grid;
   gap: 1.75rem;
   box-sizing: border-box;
@@ -47,8 +49,16 @@
   border-radius: 10px;
   padding: 0.7rem 0.85rem;
   font: inherit;
-  color: var(--text-h);
-  background: #fffdf8;
+  color: #2a241f;;
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .task-form input,
+[data-theme="dark"] .task-form textarea,
+[data-theme="dark"] .task-form select {
+  background: #1f1c19; /* soft dark card */
+  color: #f5f1eb; /* warm off-white text */
+  border-color: var(--border);
 }
 
 .task-form textarea {
@@ -120,12 +130,19 @@
 }
 
 .task-list-header select {
-  border: 1px solid rgba(217, 196, 171, 0.9);
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.45rem 0.9rem;
-  background: #fffdf8;
-  color: var(--text-h);
+  background: var(--card-bg);
+  color: var(--text);
   font: inherit;
+  transition: all 0.35s ease;
+}
+
+[data-theme="dark"] .task-list-header select {
+  background: var(--card-bg);
+  color: var(--text);
+  border-color: var(--border);
 }
 
 /* Task cards */
@@ -194,3 +211,77 @@
   border: 1px solid rgba(217, 196, 171, 0.6);
   box-shadow: var(--shadow);
 }
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(217, 196, 171, 0.5),
+    transparent
+  );
+  margin: 1.5rem 0;
+}
+
+.view-task-container {
+  width: min(700px, 100%);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+/* Base choice button */
+.choice {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-h);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 120ms ease;
+}
+
+/* Hover state */
+.choice:hover {
+  background: var(--accent-bg);
+  color: #fffaf3;
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+}
+
+/* Selected state */
+:root .choice.selected {
+  background: #b8641f; /* deeper warm amber */
+  border-color: #9c5319;
+  color: #fffaf3;
+  box-shadow: 0 0 0 2px rgba(182, 100, 31, 0.25);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .choice {
+  background: #1f1c19;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .choice:hover {
+  background: var(--accent-bg);
+  color: #fffaf3;
+}
+
+[data-theme="dark"] .choice.selected {
+  background: var(--accent);
+  color: #fffaf3;
+  border-color: var(--accent-border);
+}
+

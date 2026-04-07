@@ -1,7 +1,18 @@
+* {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
 :root {
   --text: #4b3a2a;
   --text-h: #3a2a1e;
   --bg: #f6f2eb;
+  --bg-pattern:
+    radial-gradient(circle at top, #fdf7ee 0%, #f6f2eb 55%, #f2ece4 100%),
+    url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='0.05'/%3E%3C/svg%3E");
   --border: #ddcbb5;
   --card-bg: #fdfaf5;
   --code-bg: #f3e6d8;
@@ -32,7 +43,39 @@
   }
 }
 
+[data-theme="dark"] {
+  --text: #e9e4dd;
+  --text-h: #ffffff;
+  --bg: #1e1b18;
+  --bg-pattern:
+    radial-gradient(circle at top, #1b1816 0%, #1a1715 60%, #161412 100%),
+    url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='0.08'/%3E%3C/svg%3E");
+  --border: #4a423b;
+  --card-bg: #2a2623;
+  --accent: #d28f52;
+  --accent-bg: #b8743c;
+  --accent-border: #a05f2a;
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 8px 14px -4px,
+    rgba(0, 0, 0, 0.3) 0 3px 6px -3px;
+}
+
+[data-theme="dark"] .task-form,
+[data-theme="dark"] .task-item,
+[data-theme="dark"] .dashboard-panel {
+  border-color: #3a332d;
+}
+
+[data-theme="dark"] button {
+  background: linear-gradient(135deg, #b8743c, #d28f52);
+  color: #fffaf3;
+}
+
+
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #fdf7ee 0, #f6f2eb 55%, #f2ece4 100%);
+  background: var(--bg-pattern);
+  background-attachment: scroll;
+  background-size: cover;
 }
+

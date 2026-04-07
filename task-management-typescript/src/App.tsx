@@ -6,27 +6,32 @@ function App() {
   const { loginWithRedirect, isLoading } = useAuth0();
 
   return (
-    <section id="hero">
-      <div id="hero-content">
-        <h1>Task Management App</h1>
-        <p>Organize your tasks efficiently and boost your productivity.</p>
-        <button
-          type="button"
-          disabled={isLoading}
-          onClick={() =>
-            loginWithRedirect({
-              appState: { returnTo: "/dashboard" },
-              authorizationParams: {
-                redirect_uri: `${window.location.origin}/callback`,
-              },
-            })
-          }
-        >
-          {isLoading ? "Loading..." : "Get Started"}
-        </button>
-      </div>
-    </section>
+    <div className="landing-container">
+      <section className="landing-hero">
+        <div className="landing-content">
+          <h1>Task Management App</h1>
+          <p>A calm, intentional space to organize your tasks, energy, and focus.</p>
+
+          <button
+            type="button"
+            disabled={isLoading}
+            onClick={() =>
+              loginWithRedirect({
+                appState: { returnTo: "/dashboard" },
+                authorizationParams: {
+                  redirect_uri: `${window.location.origin}/callback`,
+                },
+              })
+            }
+          >
+            {isLoading ? "Loading..." : "Get Started"}
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }
 
 export default App;
+
+
