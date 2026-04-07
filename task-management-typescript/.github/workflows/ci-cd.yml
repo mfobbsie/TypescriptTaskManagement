@@ -10,6 +10,9 @@ jobs:
   build:
     name: Build Project
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: task-management-typescript
 
     steps:
       - name: Checkout code
@@ -20,6 +23,7 @@ jobs:
         with:
           node-version: "20.19.0"
           cache: "npm"
+          cache-dependency-path: task-management-typescript/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -31,12 +35,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-build
-          path: dist/
+          path: task-management-typescript/dist/
 
   test:
     name: Run Tests
     runs-on: ubuntu-latest
     needs: build
+    defaults:
+      run:
+        working-directory: task-management-typescript
 
     steps:
       - name: Checkout code
@@ -47,6 +54,7 @@ jobs:
         with:
           node-version: "20.19.0"
           cache: "npm"
+          cache-dependency-path: task-management-typescript/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -70,7 +78,7 @@ jobs:
           name: production-build
           path: dist/
 
-      - name: List dist contents  # ← add this to confirm files are there
+      - name: List dist contents
         run: ls -la dist/
 
       - name: Prepare Vercel output
@@ -79,7 +87,7 @@ jobs:
           cp -r dist/. .vercel/output/static/
           echo '{"version":3}' > .vercel/output/config.json
 
-      - name: List vercel output  # ← confirm structure
+      - name: List vercel output
         run: ls -la .vercel/output/static/
 
       - name: Install Vercel CLI
