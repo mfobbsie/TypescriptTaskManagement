@@ -1,23 +1,23 @@
 :root {
-  --text: #5a4633;
-  --text-h: #3e2d20;
-  --bg: #f7f1e8;
-  --border: #d9c4ab;
-  --card-bg: #fffaf3;
+  --text: #4b3a2a;
+  --text-h: #3a2a1e;
+  --bg: #f6f2eb;
+  --border: #ddcbb5;
+  --card-bg: #fdfaf5;
   --code-bg: #f3e6d8;
-  --accent: #d97706;
-  --accent-bg: #f59e0b;
-  --accent-border: #c76d00;
+  --accent: #c27b3b;
+  --accent-bg: #e9a96a;
+  --accent-border: #b36a2c;
   --social-bg: #f3e5d4;
   --shadow:
-    rgba(62, 45, 32, 0.12) 0 8px 14px -4px,
-    rgba(62, 45, 32, 0.08) 0 3px 6px -3px;
+    rgba(62, 45, 32, 0.08) 0 10px 24px -8px,
+    rgba(62, 45, 32, 0.04) 0 2px 6px -3px;
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: "Outfit", system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
+  font: 18px/150% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light;
   color: var(--text);
@@ -32,47 +32,7 @@
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
-  background: var(--bg);
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+  background: radial-gradient(circle at top, #fdf7ee 0, #f6f2eb 55%, #f2ece4 100%);
 }

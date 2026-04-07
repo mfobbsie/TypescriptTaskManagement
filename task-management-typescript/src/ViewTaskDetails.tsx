@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTasks } from "./useTasks";
 import { type Task } from "./TaskContext";
+import FocusTimer from "./components/FocusTimer";
 
 const ViewTaskDetails = () => {
   const { id } = useParams();
@@ -162,6 +163,8 @@ const ViewTaskDetails = () => {
 
         <button onClick={onDelete}>Delete Task</button>
       </div>
+
+      <FocusTimer taskTitle={task.title} />
     </div>
   );
 };

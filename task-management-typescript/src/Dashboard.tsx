@@ -15,6 +15,11 @@ const Dashboard: React.FC = () => {
   const [view, setView] = useState<"list" | "matrix">("list");
   const [sortBy, setSortBy] = useState<SortOption>("none");
 
+  const [energy, setEnergy] = useState<"Low" | "Medium" | "High" | null>(null);
+  const [intention, setIntention] = useState<
+    "Self-Care" | "Productivity" | "Inspiration" | null
+  >(null);
+
   const [newTask, setNewTask] = useState<Omit<Task, "id">>({
     title: "",
     description: "",
@@ -86,6 +91,27 @@ const Dashboard: React.FC = () => {
     });
   };
 
+  const recommendedTasks = useMemo(() => {
+    if (!energy && !intention) return [];
+
+    return tasks.filter((t) => {
+      // Energy filter
+      if (energy === "Low" && t.energyLevel !== "Low") return false;
+      if (energy === "Medium" && t.energyLevel === "High") return false;
+
+      // Intention filter
+      if (intention === "Self-Care" && t.priority !== "Low") return false;
+      if (intention === "Productivity" && t.priority === "Low") return false;
+      if (
+        intention === "Inspiration" &&
+        !t.description.toLowerCase().includes("creative")
+      )
+        return false;
+
+      return true;
+    });
+  }, [tasks, energy, intention]);
+
   return (
     <div className="dashboard">
       <h1>Task Dashboard</h1>
@@ -94,6 +120,37 @@ const Dashboard: React.FC = () => {
       <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
         <button onClick={() => setView("list")}>List View</button>
         <button onClick={() => setView("matrix")}>Eisenhower Matrix</button>
+      </div>
+
+      {/* How Are You Feeling Prompt */}
+      <div className="dashboard-panel"
+        style={{
+          marginBottom: 24,
+          padding: 16,
+          borderRadius: 12,
+          background: "#f7f7f7",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+        }}
+      >
+        <h3 style={{ marginBottom: 12 }}>How are you feeling today?</h3>
+
+        <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+          <button onClick={() => setEnergy("Low")}>Low Energy</button>
+          <button onClick={() => setEnergy("Medium")}>Medium Energy</button>
+          <button onClick={() => setEnergy("High")}>High Energy</button>
+        </div>
+
+        <h4 style={{ marginBottom: 8 }}>What do you want to lean into?</h4>
+
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setIntention("Self-Care")}>Self‑Care</button>
+          <button onClick={() => setIntention("Productivity")}>
+            Productivity
+          </button>
+          <button onClick={() => setIntention("Inspiration")}>
+            Inspiration
+          </button>
+        </div>
       </div>
 
       {/* Add Task Form */}
@@ -192,6 +249,34 @@ const Dashboard: React.FC = () => {
           <option value="priority">Priority</option>
         </select>
       </div>
+
+      {/* Recommended Tasks */}
+      {(energy || intention) && (
+        <div className="dashboard-panel"
+          style={{
+            marginTop: 24,
+            padding: 16,
+            borderRadius: 12,
+            background: "#fff7e6",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h3 style={{ marginBottom: 12 }}>Recommended for You</h3>
+
+          {recommendedTasks.length === 0 && (
+            <p>No tasks match your current energy and intention.</p>
+          )}
+
+          {recommendedTasks.map((task) => (
+            <div key={task.id} style={{ marginBottom: 8 }}>
+              <strong>{task.title}</strong>
+              <button style={{ marginLeft: 12 }} onClick={() => viewTask(task)}>
+                View
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* CONDITIONAL RENDERING */}
       {view === "list" && (
