@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* @vite-ignore */
 // src/main.tsx
 import { StrictMode, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
